@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 
 #init Google maps Client 
-key = 'MY_GOOGLE_API_KEY' # Replace with your API key
+key = 'MY_GOOGLE_API_KEY' # Replace with your API key 
 gmaps = googlemaps.Client(key=key)  
 
 def get_place_details(place_id, api_key):
@@ -41,16 +41,16 @@ def search_company(city, keyword, radius=50000): # Adjust radius as needed
 
 
 
-clinic_place_ids = search_company("München", "Zahnarzt")
-# print('Result', clinic_place_ids)
-for place_id in clinic_place_ids:
+place_ids = search_company("Regensburg", "Abteilung Ausländerangelegenheiten")
+# print('Result', place_ids)
+for place_id in place_ids:
     place_name = get_place_details(place_id, api_key=key)
     # print(place_name)
 
 all_reviews = []
-for pid in clinic_place_ids:
+for pid in place_ids:
     all_reviews.extend(fetch_reviews(pid))
 
 df = pd.DataFrame(all_reviews)
 print(df.head)
-df.to_csv('clinic_reviews.csv', index=False)
+df.to_csv('ausland_reviews.csv', index=False)
